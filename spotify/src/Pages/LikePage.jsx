@@ -54,7 +54,7 @@ const LikePage = () => {
   let navigate =useNavigate();
   let toast = useToast();
   let dispatch =useDispatch();
-  let name =JSON.parse(localStorage.getItem("userDetails"))
+  let {name} =JSON.parse(localStorage.getItem("userDetails"))
   const Loggedin =  useSelector((store)=>store.isAuth);
   const { myState, toggle } = useContext(MyContext);
 
@@ -134,7 +134,7 @@ const LikePage = () => {
                     name="User"
                     src="https://bit.ly/dan-abramov"
                   /> */}
-                  <Heading as={'h5'} fontSize={'1rem'} noOfLines={'1'}  color={'white'} textTransform={'capitalize'}>{name[0].name}</Heading>
+                  <Heading as={'h5'} fontSize={'1rem'} noOfLines={'1'}  color={'white'} textTransform={'capitalize'}>{name}</Heading>
                 </MenuButton>
                 <MenuList
                   bg="rgba(40,40,40,255)"

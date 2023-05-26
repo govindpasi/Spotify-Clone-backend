@@ -63,7 +63,7 @@ function SignUp(props) {
     Confirmpassword: "",
   });
 
-  const sendRegesterData = () => {
+  const sendRegesterData = async() => {
     if (
       userData.email == "" ||
       userData.password == "" ||
@@ -96,36 +96,56 @@ function SignUp(props) {
         isClosable: true,
       });
     } else {
-      let array=[...jsonData]
-      array=array.filter((elm)=>{
-        return elm.email===userData.email 
-      })
-      if(array.length==1){
+      // let array=[...jsonData]
+      // array=array.filter((elm)=>{
+      //   return elm.email===userData.email 
+      // })
+      try {
+
+        let res =await fetch(`http://localhost:8080/users/register`,{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify(userData)
+
+        })
+
+        let jsonData =await res.json();
+
+        console.log(jsonData);
+
+        if(jsonData.status=="error"){
+          toast({
+            position: 'top-right',
+            title: 'User already exists!.',
+            description: "Please Login now...",
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          })
+        }else{
+        // localStorage.setItem("userDetails", JSON.stringify([...state, userData]));
+        // setState([...state, userData]);
+        // console.log(state);
+        setUserData(initial);
+        // isAuth = true;
         toast({
-          position: 'top-right',
-          title: 'User already exists!.',
-          description: "Please Login now...",
-          status: 'error',
+          position: "top-right",
+          title: "Account Created.",
+          description: "Successfully created Account!",
+          status: "success",
           duration: 3000,
           isClosable: true,
-        })
-      }else{
-      localStorage.setItem("userDetails", JSON.stringify([...state, userData]));
-      setState([...state, userData]);
-      console.log(state);
-      setUserData(initial);
-      // isAuth = true;
-      toast({
-        position: "top-right",
-        title: "Account Created.",
-        description: "Successfully created Account!",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-      dispatch(thunkActionCreator("auth"))
-      navigate('/')
-    }
+        });
+        // dispatch(thunkActionCreator("auth"))
+        navigate('/login')
+      }
+        
+      } catch (error) {
+        console.log(error)
+      }
+
   }
   };
 

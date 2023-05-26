@@ -42,7 +42,7 @@ function Login(props) {
     password: "",
   });
 
-  let loginData = () => {
+  let loginData = async () => {
     if(users.email==="" || users.password===""){
       toast({
         position: 'top-right',
@@ -54,33 +54,54 @@ function Login(props) {
       })
     }else{
   // setState([...state, users]);
-  let array=[...jsonData]
-    array=array.filter((elm)=>{
-      return elm.email===users.email && elm.password===users.password
-    })
-    if(array.length==0){
-      toast({
-        position: 'top-right',
-        title: 'user Not found!.',
-        description: "Please Regester now!",
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      })
-    }else{
-      toast({
-        position: 'top-right',
-        title: 'Login successfull!.',
-        description: "Enjoy now!",
-        status: 'success',
-        duration: 1000,
-        isClosable: true,
-      })
-      dispatch(thunkActionCreator("auth"))
-      setUsers(initial)
-      navigate('/')
+  // let array=[...jsonData]
+  //   array=array.filter((elm)=>{
+  //     return elm.email===users.email && elm.password===users.password
+  //   })
 
-    }
+      try {
+
+        let res =await fetch(`http://localhost:8080/users/login`,{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify(users)
+
+        })
+
+        let jsonData =await res.json();
+
+        console.log(jsonData);
+        if(jsonData.status=="error"){
+          toast({
+            position: 'top-right',
+            title: 'Login failed!.',
+            description: jsonData.msg,
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          })
+        }else{
+          toast({
+            position: 'top-right',
+            title: 'Login successfull!.',
+            description: "Enjoy now!",
+            status: 'success',
+            duration: 1000,
+            isClosable: true,
+          })
+          dispatch(thunkActionCreator("auth"))
+          setUsers(initial)
+          let {data:{name,email},token}=jsonData;
+          localStorage.setItem("userDetails", JSON.stringify({name,email,token}));
+          navigate('/')
+    
+        }
+
+      } catch (error) {
+        console.log(error)
+      }
    }
   };
   return (

@@ -48,8 +48,7 @@ const UserProfile=()=>{
   let navigate =useNavigate();
     const { myState, toggle } = useContext(MyContext);
     const [isHovered, setIsHovered] = useState(null);
-    let name =JSON.parse(localStorage.getItem("userDetails"))
-    name =name[0].name
+    let {name} =JSON.parse(localStorage.getItem("userDetails"))
     const Loggedin =  useSelector((store)=>store.isAuth);
     const handleOnChange = () => {
         toggle();

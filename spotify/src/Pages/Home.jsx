@@ -32838,7 +32838,7 @@ const SpotifyHomepage = () => {
   let dispatch =useDispatch();
   let navigate =useNavigate();
   const [trackIndex, setTrackIndex] = useState(0);
-  let name =JSON.parse(localStorage.getItem("userDetails"))
+  let {name,email,token} =JSON.parse(localStorage.getItem("userDetails"))
   const Loggedin =  useSelector((store)=>store.isAuth);
   const { myState, toggle } = useContext(MyContext);
 
@@ -32895,7 +32895,7 @@ const SpotifyHomepage = () => {
                     name="User"
                     src="https://bit.ly/dan-abramov"
                   /> */}
-                  <Heading as={'h5'} fontSize={'1rem'} noOfLines={'1'}  color={'white'} textTransform={'capitalize'}>{name[0].name}</Heading>
+                  <Heading as={'h5'} fontSize={'1rem'} noOfLines={'1'}  color={'white'} textTransform={'capitalize'}>{name}</Heading>
                 </MenuButton>
                 <MenuList
                   bg="rgba(40,40,40,255)"

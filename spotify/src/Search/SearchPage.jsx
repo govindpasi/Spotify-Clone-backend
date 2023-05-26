@@ -78,7 +78,7 @@ const SearchPage = () => {
   //   // setData2(store.getState().searchResults)
   //   console.log(store.getState().searchResults)
   // })
-  let name =JSON.parse(localStorage.getItem("userDetails"))
+  let {name} =JSON.parse(localStorage.getItem("userDetails"))
   let toast = useToast();
   let [speech, setSpeech] = useState("");
   let [searchText, setSearchText] = useState("");
@@ -185,7 +185,7 @@ const SearchPage = () => {
                     name="User"
                     src="https://bit.ly/dan-abramov"
                   /> */}
-                  <Heading as={'h5'} fontSize={'1rem'} noOfLines={'1'}  color={'white'} textTransform={'capitalize'}>{name[0].name}</Heading>
+                  <Heading as={'h5'} fontSize={'1rem'} noOfLines={'1'}  color={'white'} textTransform={'capitalize'}>{name}</Heading>
                 </MenuButton>
                 <MenuList
                   bg="rgba(40,40,40,255)"
